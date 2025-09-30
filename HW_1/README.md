@@ -31,7 +31,7 @@ go run main.go testArg
 
 * prints the username from an environment variable;
 * reads and prints the CLI arguments;
-* shows the current Go version using `runtime`.Version()`.
+* shows the current Go version using `runtime.Version()`.
 
 ### Running the program
 
