@@ -8,7 +8,9 @@
 
 ### Запуск программы
 
-`go run main.go testArg`
+```
+go run main.go testArg
+```
 
 ### Вывод
 
@@ -33,7 +35,9 @@
 
 ### Running the program
 
-`go run main.go testArg`
+```
+go run main.go testArg
+```
 
 ### Output
 
