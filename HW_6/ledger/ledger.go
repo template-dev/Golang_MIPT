@@ -44,7 +44,7 @@ func (l *Ledger) AddTransaction(tx *Transaction) error {
 	if tx.Type == "expense" {
 		budget, exists := l.Budgets[tx.Category]
 		if exists {
-			currentSpent := l.getCategorySpending(tx.Category)
+			currentSpent := l.GetCategorySpending(tx.Category)
 			if currentSpent+tx.Amount > budget.Limit {
 				return ErrBudgetExceeded
 			}
@@ -76,7 +76,7 @@ func (l *Ledger) ListBudgets() []*Budget {
 	return budgets
 }
 
-func (l *Ledger) getCategorySpending(category string) float64 {
+func (l *Ledger) GetCategorySpending(category string) float64 {
 	var total float64
 	for _, tx := range l.Transactions {
 		if tx.Category == category && tx.Type == "expense" {
@@ -84,4 +84,9 @@ func (l *Ledger) getCategorySpending(category string) float64 {
 		}
 	}
 	return total
+}
+
+func (l *Ledger) Reset() {
+	l.Transactions = make([]*Transaction, 0)
+	l.Budgets = make(map[string]*Budget)
 }

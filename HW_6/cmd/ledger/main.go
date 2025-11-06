@@ -1,4 +1,3 @@
-// cmd/ledger/main.go
 package main
 
 import (
@@ -6,12 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jukov801/Golang_MIPT/HW_4/ledger"
+	"github.com/jukov801/Golang_MIPT/HW_6/gateway/internal/api"
+	"github.com/jukov801/Golang_MIPT/HW_6/ledger"
 )
 
 func main() {
 	ledgerService := ledger.NewLedger()
-	handler := ledger.NewHandler(ledgerService)
+	handler := api.NewHandler(ledgerService)
 
 	mux := http.NewServeMux()
 
@@ -21,10 +21,7 @@ func main() {
 	mux.HandleFunc("POST /api/budgets", handler.CreateBudgetHandler)
 	mux.HandleFunc("GET /api/budgets", handler.ListBudgetsHandler)
 
-	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(`{"status":"ok"}`))
-	})
+	mux.HandleFunc("GET /health", handler.HealthHandler)
 
 	handlerWithMiddleware := ledger.LoggingMiddleware(mux)
 
